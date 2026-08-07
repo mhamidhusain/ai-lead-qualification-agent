@@ -28,3 +28,7 @@ ai-lead-qualification-agent/
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+
+## Sample Output
+
+A complete example report is available in [`sample_output.txt`](sample_output.txt).
