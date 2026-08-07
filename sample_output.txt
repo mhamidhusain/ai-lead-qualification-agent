@@ -1,0 +1,30 @@
+AI LEAD QUALIFICATION AGENT — SAMPLE OUTPUT
+
+Lead Information
+----------------
+Client name: Ahmed
+Company: Ahmed Dental Clinic
+Business type: Dental Clinic
+Service needed: More patients through Google Ads
+Monthly budget: $2,500
+Timeline: Within two weeks
+Decision-maker: Yes
+
+Qualification Result
+--------------------
+Lead score: 10/10
+Classification: Hot
+
+Main reasons:
+- Strong monthly budget
+- Urgent start timeline
+- Direct access to the decision-maker
+- Clear business need
+
+Recommended next action:
+Schedule a strategy call within 24–48 hours.
+
+Useful follow-up questions:
+1. Which treatments do you want to promote most?
+2. What marketing have you already tried?
+3. How many new patients can the clinic handle each month?
