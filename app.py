@@ -26,8 +26,72 @@ def get_yes_no_unknown():
         print("Please enter yes, no, or unknown.")
 
 
+def qualify_lead():
+    print("\nPlease enter the potential client's information.\n")
+
+    name = input("Client name: ")
+    company = input("Company name: ")
+    business_type = input("Type of business: ")
+    service_needed = input("Service they need: ")
+    budget = get_budget()
+    timeline = input("When do they want to start?: ")
+    decision_maker = get_yes_no_unknown()
 
 
+    lead_score = calculate_score(
+        budget,
+        timeline,
+        decision_maker
+    )
+
+    classification = classify_lead(lead_score)
+
+    lead_information = f"""
+    Client name: {name}
+    Company: {company}
+    Business type: {business_type}
+    Service needed: {service_needed}
+    Monthly budget: ${budget:,.2f}
+    Timeline: {timeline}
+    Decision-maker: {decision_maker}
+
+    Calculated lead score: {lead_score}/10
+    Calculated classification: {classification}
+    """
+
+
+    try:
+        response = client.responses.create(
+            model="gpt-5.1",
+            instructions=LEAD_QUALIFICATION_INSTRUCTIONS,
+            input=lead_information
+        )
+
+        print("\nLead Qualification Result:\n")
+        print(response.output_text)
+
+        save_choice = input(
+            "\nSave this lead report? (yes/no): "
+        )
+
+        if save_choice.lower() == "yes":
+            with open(
+                "lead_report.txt",
+                "w",
+                encoding="utf-8"
+            ) as file:
+                file.write("LEAD INFORMATION\n")
+                file.write("================\n")
+                file.write(lead_information)
+
+                file.write("\nQUALIFICATION RESULT\n")
+                file.write("====================\n")
+                file.write(response.output_text)
+
+            print("Lead report saved to lead_report.txt")
+
+    except Exception as error:
+        print(f"\nAn error occurred: {error}")
 
 print("AI Lead Qualification Assistant")
 
@@ -39,75 +103,9 @@ while True:
     choice = input("Enter your choice: ").strip()
 
     if choice == "1":
-        break
+        qualify_lead()
     elif choice == "2":
         print("Goodbye!")
-        raise SystemExit
+        break
     else:
         print("Please enter 1 or 2.")
-
-print("\nPlease enter the potential client's information.\n")
-
-name = input("Client name: ")
-company = input("Company name: ")
-business_type = input("Type of business: ")
-service_needed = input("Service they need: ")
-budget = get_budget()
-timeline = input("When do they want to start?: ")
-decision_maker = get_yes_no_unknown()
-
-
-lead_score = calculate_score(
-    budget,
-    timeline,
-    decision_maker
-)
-
-classification = classify_lead(lead_score)
-
-lead_information = f"""
-Client name: {name}
-Company: {company}
-Business type: {business_type}
-Service needed: {service_needed}
-Monthly budget: ${budget:,.2f}
-Timeline: {timeline}
-Decision-maker: {decision_maker}
-
-Calculated lead score: {lead_score}/10
-Calculated classification: {classification}
-"""
-
-
-try:
-    response = client.responses.create(
-        model="gpt-5.1",
-        instructions=LEAD_QUALIFICATION_INSTRUCTIONS,
-        input=lead_information
-    )
-
-    print("\nLead Qualification Result:\n")
-    print(response.output_text)
-
-    save_choice = input(
-        "\nSave this lead report? (yes/no): "
-    )
-
-    if save_choice.lower() == "yes":
-        with open(
-            "lead_report.txt",
-            "w",
-            encoding="utf-8"
-        ) as file:
-            file.write("LEAD INFORMATION\n")
-            file.write("================\n")
-            file.write(lead_information)
-
-            file.write("\nQUALIFICATION RESULT\n")
-            file.write("====================\n")
-            file.write(response.output_text)
-
-        print("Lead report saved to lead_report.txt")
-
-except Exception as error:
-    print(f"\nAn error occurred: {error}")
