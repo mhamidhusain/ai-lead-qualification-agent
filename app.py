@@ -12,6 +12,17 @@ def get_budget():
         except ValueError:
             print("Please enter a number, such as 2500.")
 
+def get_yes_no_unknown():
+    while True:
+        answer = input(
+            "Are they the decision-maker? (yes/no/unknown): "
+        ).strip().lower()
+
+        if answer in ["yes", "no", "unknown"]:
+            return answer
+
+        print("Please enter yes, no, or unknown.")
+
 
 def calculate_score(budget, timeline, decision_maker):
     score = 1
@@ -29,14 +40,25 @@ def calculate_score(budget, timeline, decision_maker):
     # Timeline score
     timeline = timeline.lower()
 
-    if (
-        "immediately" in timeline
-        or "one week" in timeline
-        or "two weeks" in timeline
-        or "within a month" in timeline
-    ):
+    urgent_phrases = [
+        "immediately",
+        "as soon as possible",
+        "asap",
+        "one week",
+        "two weeks",
+        "within a month",
+        "this month",
+    ]
+
+    medium_phrases = [
+        "two months",
+        "three months",
+        "next quarter",
+    ]
+
+    if any(phrase in timeline for phrase in urgent_phrases):
         score += 3
-    elif "three months" in timeline:
+    elif any(phrase in timeline for phrase in medium_phrases):
         score += 2
     else:
         score += 1
@@ -70,9 +92,8 @@ business_type = input("Type of business: ")
 service_needed = input("Service they need: ")
 budget = get_budget()
 timeline = input("When do they want to start?: ")
-decision_maker = input(
-    "Are they the decision-maker? (yes/no/unknown): "
-)
+decision_maker = get_yes_no_unknown()
+
 
 lead_score = calculate_score(
     budget,
