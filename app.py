@@ -30,7 +30,23 @@ def get_yes_no_unknown():
 
 
 print("AI Lead Qualification Assistant")
-print("Please enter the potential client's information.\n")
+
+while True:
+    print("\nChoose an option:")
+    print("1. Qualify a lead")
+    print("2. Exit")
+
+    choice = input("Enter your choice: ").strip()
+
+    if choice == "1":
+        break
+    elif choice == "2":
+        print("Goodbye!")
+        raise SystemExit
+    else:
+        print("Please enter 1 or 2.")
+
+print("\nPlease enter the potential client's information.\n")
 
 name = input("Client name: ")
 company = input("Company name: ")
