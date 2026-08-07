@@ -1,37 +1,30 @@
 # AI Lead Qualification Agent
 
-A Python-based AI agent that evaluates potential business leads for a digital marketing and AI automation agency.
+A Python-based AI agent that evaluates potential business leads for a digital marketing or AI automation agency.
+
+The program combines rule-based scoring with AI-generated analysis to classify leads and recommend the next sales action.
 
 ## Features
 
 - Collects lead information
+- Validates budget and decision-maker input
 - Calculates a lead score from 1 to 10
 - Classifies leads as Hot, Warm, or Cold
-- Uses AI to explain the result
+- Uses the OpenAI API to explain the result
+- Identifies missing information
 - Recommends the next action
-- Generates useful follow-up questions
-- Saves the full report to a text file
+- Generates follow-up questions
+- Saves the complete lead report
+- Includes automated scoring tests
 
-## Technologies Used
+## Project Structure
 
-- Python
-- OpenAI API
-- Rule-based scoring
-- File handling
-
-## How It Works
-
-The Python program calculates the lead score using:
-
-- Monthly budget
-- Expected start timeline
-- Whether the contact is the decision-maker
-
-The AI then analyzes the information without changing the calculated score.
-
-## How to Run
-
-Install the OpenAI package:
-
-```bash
-pip install openai
+```text
+ai-lead-qualification-agent/
+├── app.py
+├── scoring.py
+├── prompts.py
+├── test_scoring.py
+├── requirements.txt
+├── README.md
+└── .gitignore
