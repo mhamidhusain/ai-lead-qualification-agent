@@ -28,6 +28,7 @@ ai-lead-qualification-agent/
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+```
 
 ## Sample Output
 
