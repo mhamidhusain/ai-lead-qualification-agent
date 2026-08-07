@@ -1,6 +1,7 @@
 from openai import OpenAI
 from scoring import calculate_score, classify_lead
 from prompts import LEAD_QUALIFICATION_INSTRUCTIONS
+from datetime import datetime
 
 client = OpenAI()
 
@@ -75,11 +76,14 @@ def qualify_lead():
         )
 
         if save_choice.lower() == "yes":
-            with open(
-                "lead_report.txt",
-                "w",
-                encoding="utf-8"
-            ) as file:
+            timestamp = datetime.now().strftime("%Y-%m-%d_%H%M")
+
+            safe_name = name.replace(" ", "_")
+            safe_company = company.replace(" ", "_")
+
+            filename = f"{safe_name}_{safe_company}_{timestamp}.txt"
+
+            with open(filename, "w", encoding="utf-8") as file:
                 file.write("LEAD INFORMATION\n")
                 file.write("================\n")
                 file.write(lead_information)
@@ -88,7 +92,9 @@ def qualify_lead():
                 file.write("====================\n")
                 file.write(response.output_text)
 
-            print("Lead report saved to lead_report.txt")
+            print(f"Lead report saved to {filename}")
+
+            print(f"Lead report saved to {filename}")
 
     except Exception as error:
         print(f"\nAn error occurred: {error}")
