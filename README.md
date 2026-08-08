@@ -4,6 +4,18 @@ A Python-based AI agent that evaluates potential business leads for a digital ma
 
 The program combines rule-based scoring with AI-generated analysis to classify leads and recommend the next sales action.
 
+## Demo
+
+The project includes both:
+
+- A command-line version: `app.py`
+- A Streamlit web version: `web_app.py`
+
+Run the web app with:
+
+```bash
+streamlit run web_app.py
+
 ## Features
 
 - Collects lead information
@@ -16,15 +28,20 @@ The program combines rule-based scoring with AI-generated analysis to classify l
 - Generates follow-up questions
 - Saves the complete lead report
 - Includes automated scoring tests
+```markdown
+- Browser-based Streamlit interface
+- Downloadable lead qualification reports
 
 ## Project Structure
 
 ```text
 ai-lead-qualification-agent/
 ├── app.py
+├── web_app.py
 ├── scoring.py
 ├── prompts.py
 ├── test_scoring.py
+├── sample_output.txt
 ├── requirements.txt
 ├── README.md
 └── .gitignore
@@ -33,3 +50,16 @@ ai-lead-qualification-agent/
 ## Sample Output
 
 A complete example report is available in [`sample_output.txt`](sample_output.txt).
+
+## Skills Demonstrated
+
+- Python programming
+- API integration
+- OpenAI Responses API
+- Rule-based lead scoring
+- Input validation
+- Streamlit web development
+- File handling
+- Automated testing
+- Git and GitHub
+- Modular project structure

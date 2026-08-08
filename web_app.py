@@ -10,12 +10,17 @@ st.set_page_config(
     layout="centered"
 )
 
-client = OpenAI()
-
 st.title("AI Lead Qualification Agent")
 st.caption(
-    "Score and analyze potential business leads using rule-based logic and AI."
+    "Evaluate leads using rule-based scoring and AI-generated recommendations."
 )
+
+st.divider()
+
+st.subheader("Lead Details")
+
+client = OpenAI()
+
 
 with st.form("lead_form"):
     name = st.text_input("Client name")
@@ -36,7 +41,10 @@ with st.form("lead_form"):
         ["yes", "no", "unknown"]
     )
 
-    submitted = st.form_submit_button("Qualify Lead")
+    submitted = st.form_submit_button(
+    "Qualify Lead",
+    type="primary"
+)
 
 if submitted:
     if not name or not company or not business_type or not service_needed or not timeline:
@@ -80,8 +88,10 @@ Calculated classification: {classification}
         with col2:
             st.metric("Classification", classification)
 
+        st.divider
+
         st.subheader("AI Analysis")
-        st.write(response.output_text)
+        st.markdown(response.output_text)
 
         report_text = f"""
         LEAD INFORMATION
