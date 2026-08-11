@@ -1,8 +1,6 @@
 # AI Lead Qualification Agent
 
-A Python-based AI agent that evaluates potential business leads for a digital marketing or AI automation agency.
-
-The program combines rule-based scoring with AI-generated analysis to classify leads and recommend the next sales action.
+A Python-based AI lead qualification tool that combines rule-based scoring, OpenAI, and Streamlit to evaluate business leads and recommend the next sales action.
 
 ## Demo
 
