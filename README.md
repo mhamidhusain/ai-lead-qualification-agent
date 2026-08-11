@@ -6,12 +6,16 @@ The program combines rule-based scoring with AI-generated analysis to classify l
 
 ## Demo
 
-The project includes both:
+Try the live web app:
+
+[Open the AI Lead Qualification Agent](https://ai-lead-qualification-agent-mhh.streamlit.app/)
+
+The project also includes:
 
 - A command-line version: `app.py`
 - A Streamlit web version: `web_app.py`
 
-Run the web app with:
+Run the web app locally with:
 
 ```bash
 streamlit run web_app.py
