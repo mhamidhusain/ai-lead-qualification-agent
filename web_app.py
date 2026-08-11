@@ -25,6 +25,10 @@ client = OpenAI()
 if "lead_history" not in st.session_state:
     st.session_state.lead_history = []
 
+if "last_result" not in st.session_state:
+    st.session_state.last_result = None
+
+
 with st.form("lead_form"):
     name = st.text_input("Client name")
     company = st.text_input("Company name")
@@ -92,20 +96,7 @@ Calculated classification: {classification}
             input=lead_information
         )
 
-        st.subheader("Qualification Result")
-
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.metric("Lead Score", f"{score}/10")
-
-        with col2:
-            st.metric("Classification", classification)
-
-        st.divider()
-
-        st.subheader("AI Analysis")
-        st.markdown(response.output_text)
+        
 
         report_text = f"""
         LEAD INFORMATION
@@ -138,32 +129,59 @@ Calculated classification: {classification}
             f"{safe_name}_{safe_company}_{timestamp}.txt"
 )
 
-        st.download_button(
-            label="Download Lead Report",
-            data=report_text,
-            file_name=download_filename,
-            mime="text/plain"
-)
-
-        if st.session_state.lead_history:
-            st.divider()
-            st.subheader("Lead History")
-            st.dataframe(st.session_state.lead_history, use_container_width=True)
-
-            history_df = pd.DataFrame(st.session_state.lead_history)
-
-            csv_data = history_df.to_csv(index=False).encode("utf-8")
-
-            st.download_button(
-                label="Download Lead History CSV",
-                data=csv_data,
-                file_name="lead_history.csv",
-                mime="text/csv"
-)
-
-            if st.button("Clear Lead History"):
-                st.session_state.lead_history = []
-                st.rerun()
+        st.session_state.last_result = {
+            "score": score,
+            "classification": classification,
+            "analysis": response.output_text,
+            "report_text": report_text,
+            "download_filename": download_filename,
+}
 
     except Exception as error:
         st.error(f"An error occurred: {error}")
+
+if st.session_state.last_result:
+    result = st.session_state.last_result
+
+    st.subheader("Qualification Result")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.metric("Lead Score", f"{result['score']}/10")
+
+    with col2:
+        st.metric("Classification", result["classification"])
+
+    st.divider()
+
+    st.subheader("AI Analysis")
+    st.markdown(result["analysis"])
+
+    st.download_button(
+        label="Download Lead Report",
+        data=result["report_text"],
+        file_name=result["download_filename"],
+        mime="text/plain"
+    )
+
+if st.session_state.lead_history:
+    st.divider()
+    st.subheader("Lead History")
+    st.dataframe(st.session_state.lead_history, use_container_width=True)
+
+    history_df = pd.DataFrame(st.session_state.lead_history)
+
+    csv_data = history_df.to_csv(index=False).encode("utf-8")
+
+    st.download_button(
+        label="Download Lead History CSV",
+        data=csv_data,
+        file_name="lead_history.csv",
+        mime="text/csv"
+)
+
+    if st.button("Clear Lead History"):
+        st.session_state.lead_history = []
+        st.rerun()
+
