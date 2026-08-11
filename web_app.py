@@ -21,6 +21,8 @@ st.subheader("Lead Details")
 
 client = OpenAI()
 
+if "lead_history" not in st.session_state:
+    st.session_state.lead_history = []
 
 with st.form("lead_form"):
     name = st.text_input("Client name")
@@ -57,6 +59,17 @@ if submitted:
     )
 
     classification = classify_lead(score)
+
+    st.session_state.lead_history.append(
+    {
+        "Client": name,
+        "Company": company,
+        "Business": business_type,
+        "Budget": budget,
+        "Score": score,
+        "Classification": classification,
+    }
+)
 
     lead_information = f"""
 Client name: {name}
@@ -130,6 +143,16 @@ Calculated classification: {classification}
             file_name=download_filename,
             mime="text/plain"
 )
+
+        if st.session_state.lead_history:
+            st.divider()
+            st.subheader("Lead History")
+            st.dataframe(st.session_state.lead_history, use_container_width=True)
+            
+
+            if st.button("Clear Lead History"):
+                st.session_state.lead_history = []
+                st.rerun()
 
     except Exception as error:
         st.error(f"An error occurred: {error}")
