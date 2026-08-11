@@ -3,6 +3,7 @@ from openai import OpenAI
 from scoring import calculate_score, classify_lead
 from prompts import LEAD_QUALIFICATION_INSTRUCTIONS
 from datetime import datetime
+import pandas as pd
 
 st.set_page_config(
     page_title="AI Lead Qualification Agent",
@@ -148,7 +149,17 @@ Calculated classification: {classification}
             st.divider()
             st.subheader("Lead History")
             st.dataframe(st.session_state.lead_history, use_container_width=True)
-            
+
+            history_df = pd.DataFrame(st.session_state.lead_history)
+
+            csv_data = history_df.to_csv(index=False).encode("utf-8")
+
+            st.download_button(
+                label="Download Lead History CSV",
+                data=csv_data,
+                file_name="lead_history.csv",
+                mime="text/csv"
+)
 
             if st.button("Clear Lead History"):
                 st.session_state.lead_history = []
