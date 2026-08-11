@@ -88,7 +88,7 @@ Calculated classification: {classification}
         with col2:
             st.metric("Classification", classification)
 
-        st.divider
+        st.divider()
 
         st.subheader("AI Analysis")
         st.markdown(response.output_text)
